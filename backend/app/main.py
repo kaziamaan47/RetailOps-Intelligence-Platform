@@ -1,23 +1,29 @@
 from fastapi import FastAPI
 
+from app.core.config import settings
+
+
 app = FastAPI(
-    title="Fikxi API",
+    title=settings.app_name,
     description="Backend API for Fikxi, a multilingual local services marketplace.",
-    version="0.1.0",
+    version=settings.app_version,
 )
 
 
 @app.get("/")
 def root():
     return {
-        "message": "Welcome to Fikxi API",
+        "message": f"Welcome to {settings.app_name}",
         "status": "running",
-        "version": "0.1.0",
+        "version": settings.app_version,
+        "environment": settings.app_env,
     }
 
 
 @app.get("/health")
 def health_check():
     return {
-        "status": "healthy"
+        "status": "healthy",
+        "app": settings.app_name,
+        "environment": settings.app_env,
     }
